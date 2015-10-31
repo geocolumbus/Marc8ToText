@@ -60,13 +60,14 @@ public class Marc8Combiner {
 
             // Handle Marc21 Escape characters
             if (b1 == 0x1D) {
-                marc8Representations.add(new Marc8Representation("[1D Record Terminator]\n", b1));
-                break;
+                marc8Representations.add(new Marc8Representation("[1D Record Terminator]\n"+
+                        "----------------------------------------------------------------", b1));
+                continue;
             } else if (b1 == 0x1E) {
-                marc8Representations.add(new Marc8Representation(" [1E Field Terminator]\n", b1));
+                marc8Representations.add(new Marc8Representation("[1E Field Terminator]\n", b1));
                 continue;
             } else if (b1 == 0x1F) {
-                marc8Representations.add(new Marc8Representation("\n[1F Subfield Delimiter] " + (char) b2 + " ", b1));
+                marc8Representations.add(new Marc8Representation("[1F Subfield Delimiter]" + (char) b2, b1));
                 i++;
                 continue;
             } else if (b1 == 0x88) {
@@ -129,7 +130,7 @@ public class Marc8Combiner {
                 if (b2 == 0x2F && b3 == 0x46) {
                     graphicCharGraphicCharEscapeMode = GraphicCharEscapeMode.NONE;
                     i += 2;
-                    marc8Representations.add(new Marc8Representation("[ESC]/F  none"));
+                    marc8Representations.add(new Marc8Representation("[esc/F]"));
                     continue;
                 }
             }

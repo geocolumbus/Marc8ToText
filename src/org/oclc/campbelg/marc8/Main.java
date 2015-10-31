@@ -7,15 +7,21 @@ import java.io.IOException;
 
 public class Main {
 
+    private static final int MAX_RECORDS = 10;
+
     public static void main(String[] args) {
+        int maxRecords = MAX_RECORDS;
         if (args.length == 0) {
             MyHelp.display();
         } else {
+            if (args.length == 2) {
+                maxRecords = Integer.parseInt(args[1]);
+            }
             String fileName = args[0];
             try {
-                Marc8File marc8File = new Marc8File(fileName);
-                System.out.println(marc8File.marc8RepresentationsToString());
-            } catch(IOException e) {
+                Marc8File marc8File = new Marc8File(fileName, maxRecords);
+                System.out.println(marc8File.marc8RecordsToString());
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }

@@ -1,12 +1,12 @@
 package org.oclc.campbelg.marc8.utilities;
 
 /**
- * Created by campbelg on 10/30/15.
+ * Display a little help message when the user cacs on the command line.
  */
 public class MyHelp {
 
     public static void display() {
-       String ret="Usage: marc8 filename";
+       String ret="Usage: marc8 filename [max number of records]";
         System.out.println(ret);
     }
 }
