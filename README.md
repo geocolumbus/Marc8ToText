@@ -1,6 +1,6 @@
 # Marc8ToText
 
-Command line utility to display a Marc21 / Marc8 record to the console in mostly human readable form.
+Command line utility to display a Marc21 format / Marc8 encoded record to the console in mostly human readable form.
 
 ## Requires
 
