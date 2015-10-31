@@ -8,6 +8,16 @@ import java.util.ArrayList;
  */
 public class Marc8Combiner {
 
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLACK = "\u001B[30m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_WHITE = "\u001B[37m";
+
     /**
      * Enumerations for the graphic character mode
      */
@@ -60,14 +70,13 @@ public class Marc8Combiner {
 
             // Handle Marc21 Escape characters
             if (b1 == 0x1D) {
-                marc8Representations.add(new Marc8Representation("[1D Record Terminator]\n"+
-                        "----------------------------------------------------------------", b1));
+                marc8Representations.add(new Marc8Representation("\n" + ANSI_RED + "[1D Rec Term]" + ANSI_RESET + "\n", b1));
                 continue;
             } else if (b1 == 0x1E) {
-                marc8Representations.add(new Marc8Representation("[1E Field Terminator]\n", b1));
+                marc8Representations.add(new Marc8Representation(ANSI_GREEN + "[1E Fld Term]" + ANSI_RESET + "\n", b1));
                 continue;
             } else if (b1 == 0x1F) {
-                marc8Representations.add(new Marc8Representation("[1F Subfield Delimiter]" + (char) b2, b1));
+                marc8Representations.add(new Marc8Representation("\n" + ANSI_YELLOW + "[1F Subfld]" + (char) b2+ ANSI_RESET, b1));
                 i++;
                 continue;
             } else if (b1 == 0x88) {
@@ -221,4 +230,5 @@ public class Marc8Combiner {
         }
         return marc8Representations;
     }
+
 }
