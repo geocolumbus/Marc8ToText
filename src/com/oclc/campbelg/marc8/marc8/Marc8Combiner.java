@@ -19,8 +19,6 @@ public class Marc8Combiner {
         G1_SET_ADDITIONAL
     }
 
-    ;
-
     /**
      * Enumerations for the character set mode
      */
@@ -62,25 +60,26 @@ public class Marc8Combiner {
 
             // Handle Marc21 Escape characters
             if (b1 == 0x1D) {
-                marc8Representations.add(new Marc8Representation("\n1D [Record Terminator]\n", b1));
-                continue;
+                marc8Representations.add(new Marc8Representation("[1D Record Terminator]\n", b1));
+                break;
             } else if (b1 == 0x1E) {
-                marc8Representations.add(new Marc8Representation("\n1E [Field Terminator] ---------------------------------------------\n", b1));
+                marc8Representations.add(new Marc8Representation(" [1E Field Terminator]\n", b1));
                 continue;
             } else if (b1 == 0x1F) {
-                marc8Representations.add(new Marc8Representation("\n1F [Subfield Delimiter]\n", b1));
+                marc8Representations.add(new Marc8Representation("\n[1F Subfield Delimiter] " + (char) b2 + " ", b1));
+                i++;
                 continue;
             } else if (b1 == 0x88) {
-                marc8Representations.add(new Marc8Representation("\n1F [Non-sorting Characters Begin]\n", b1));
+                marc8Representations.add(new Marc8Representation("[88 Non-sorting Characters Begin]", b1));
                 continue;
             } else if (b1 == 0x89) {
-                marc8Representations.add(new Marc8Representation("\n1F [Non-sorting Characters End]\n", b1));
+                marc8Representations.add(new Marc8Representation("[89 Non-sorting Characters End]", b1));
                 continue;
             } else if (b1 == 0x8D) {
-                marc8Representations.add(new Marc8Representation("\n1F [Joiner]\n", b1));
+                marc8Representations.add(new Marc8Representation("[8D Joiner]", b1));
                 continue;
             } else if (b1 == 0x8E) {
-                marc8Representations.add(new Marc8Representation("\n1F [Non-joiner]\n", b1));
+                marc8Representations.add(new Marc8Representation("[8E Non-joiner]", b1));
                 continue;
             }
 

@@ -1,6 +1,7 @@
 package com.oclc.campbelg.marc8.marc8;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class Marc8File {
 
     String fileName;
-    byte[] file;
+    ArrayList<Byte> file = new ArrayList<>();
     ArrayList<Marc8Byte> marc8Bytes = new ArrayList<>();
     ArrayList<Marc8Representation> marc8Representations = new ArrayList<>();
 
@@ -34,8 +35,14 @@ public class Marc8File {
      * Red the Marc8 file in as bytes
      */
     private void readMarc8File() throws IOException {
-        Path path = Paths.get(fileName);
-        file = Files.readAllBytes(path);
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        byte[] bytes = new byte[1];
+        while ((fileInputStream.read(bytes)) != -1) {
+            file.add(bytes[0]);
+            if (bytes[0] == 0x1D) {
+                break;
+            }
+        }
     }
 
     /**
@@ -47,9 +54,14 @@ public class Marc8File {
         }
     }
 
-    private enum Marc21Mode {NONE, LEADER, DIRECTORY}
-
-    ;
+    /**
+     * The Marc21 Sections
+     */
+    private enum Marc21Mode {
+        NONE,
+        LEADER,
+        DIRECTORY
+    }
 
     /**
      * Display the marc8Representations in human readable format
@@ -64,7 +76,7 @@ public class Marc8File {
         for (int i = 0; i < marc8Representations.size(); i++) {
             switch (i) {
                 case 0:
-                    ret += "== L E A D E R   B E G I N ==============================================================\n";
+                    ret += "\n";
                     ret += "RECORD LENGTH: ";
                     marc21Mode = Marc21Mode.LEADER;
                     break;
@@ -114,8 +126,7 @@ public class Marc8File {
                     ret += "\nUNDEFINED: ";
                     break;
                 case 24:
-                    ret += "\n== L E A D E R   E N D ==================================================================\n";
-                    ret += "== D I R E C T O R Y   B E G I N ========================================================";
+                    ret += "\n";
                     marc21Mode = Marc21Mode.DIRECTORY;
                     break;
             }
@@ -124,7 +135,6 @@ public class Marc8File {
                 if (marc8Representations.get(i).getMarc8Byte() == 0x1E) {
                     marc21Mode = Marc21Mode.NONE;
                     ret += marc8Representations.get(i).getRepresentation();
-                    ret += "== D I R E C T O R Y   E N D ============================================================\n";
                     continue;
                 } else {
                     ret += "\n";
