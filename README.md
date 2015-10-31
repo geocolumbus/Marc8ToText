@@ -6,7 +6,7 @@ A command line utility to display a Marc21 format / Marc8 encoded record to the 
 
 Java 1.8
 
-## Install and Use
+## Installation and Use
 
 Download Marc8ToText.jar and run it thusly:
 
