@@ -4,7 +4,7 @@ Command line utility to display a Marc21 / Marc8 record to the console in mostly
 
 ## Usage
 
-`java -jar Marc8ToText.jar path/filename.marc [max records to display, default=1]`
+`java -jar Marc8ToText.jar filename [optional max records to display, default=10]`
 
 ## Sample output
 
