@@ -1,4 +1,4 @@
-package com.oclc.campbelg.marc8.marc8;
+package org.oclc.campbelg.marc8.marc8;
 
 /**
  * Represent a marc8 byte as a byte and as an interpreted representation

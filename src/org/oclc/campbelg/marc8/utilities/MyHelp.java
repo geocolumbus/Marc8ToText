@@ -1,4 +1,4 @@
-package com.oclc.campbelg.marc8.utilities;
+package org.oclc.campbelg.marc8.utilities;
 
 /**
  * Created by campbelg on 10/30/15.

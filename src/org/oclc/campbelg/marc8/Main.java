@@ -1,7 +1,7 @@
-package com.oclc.campbelg.marc8;
+package org.oclc.campbelg.marc8;
 
-import com.oclc.campbelg.marc8.marc8.Marc8File;
-import com.oclc.campbelg.marc8.utilities.MyHelp;
+import org.oclc.campbelg.marc8.marc8.Marc8File;
+import org.oclc.campbelg.marc8.utilities.MyHelp;
 
 import java.io.IOException;
 

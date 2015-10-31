@@ -1,4 +1,4 @@
-package com.oclc.campbelg.marc8.marc8;
+package org.oclc.campbelg.marc8.marc8;
 
 import java.io.File;
 import java.io.FileInputStream;

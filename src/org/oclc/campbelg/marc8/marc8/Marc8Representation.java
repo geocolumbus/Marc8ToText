@@ -1,4 +1,4 @@
-package com.oclc.campbelg.marc8.marc8;
+package org.oclc.campbelg.marc8.marc8;
 
 /**
  * Representation of a Marc8 Character
