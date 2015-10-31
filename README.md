@@ -1,14 +1,14 @@
 # Marc8ToText
 
-Command line utility to display a Marc21 / Marc8 record to the console in mostly human readable form. On an ANSI Terminal, it displays in color:
+Command line utility to display a Marc21 / Marc8 record to the console in mostly human readable form.
 
 ## Usage
-
-Build the file.
 
 `java -jar Marc8ToText.jar path/filename.marc [max records to display, default=1]`
 
 ## Sample output
+
+Note - output on ANSI terminals is in color.
 
 <pre>
 RECORD LENGTH: 00982
