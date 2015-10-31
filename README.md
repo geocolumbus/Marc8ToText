@@ -1,6 +1,6 @@
 # Marc8ToText
 
-Command line utility to display a Marc21 format / Marc8 encoded record to the console with the fixed field layed out neatly, and the escapes explicitly displayed. In color!
+A command line utility to display a Marc21 format / Marc8 encoded record to the console with the fixed field layed out neatly, and the escapes explicitly displayed and labeled. It beats a hex dump for quick debugging any day.
 
 ## Requires
 
