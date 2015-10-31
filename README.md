@@ -2,6 +2,10 @@
 
 Command line utility to display a Marc21 / Marc8 record to the console in mostly human readable form.
 
+## Requires
+
+Java 1.8
+
 ## Usage
 
 `java -jar Marc8ToText.jar filename [optional max records to display, default=10]`
