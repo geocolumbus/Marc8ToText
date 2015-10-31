@@ -17,3 +17,8 @@ Note: The optional max records to display has a default value of 10 because raw 
 ## Sample output
 
 ![Color Marc Record](https://dl.dropboxusercontent.com/u/8515698/Color%20Marc21%3AMarc8%20Record.png "Color Marc21/Marc8 Record")
+
+## Sample Marc21 format Marc8 encoded records
+
+* [OCLC - sample records with International Characters](http://psw.oclc.org/sample.html)
+* [Large Marc21 records from various sources](http://wiki.koha-community.org/wiki/Free_sample_MARC_data)
