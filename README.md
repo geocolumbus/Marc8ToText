@@ -2,6 +2,8 @@
 
 A command line utility to display a Marc21 format / Marc8 encoded record to the console with the fixed field layed out neatly, and the escapes explicitly displayed and labeled. It beats a hex dump for quick debugging any day.
 
+Note that the directory is left at the top and the raw field data at the bottom - I don't try to combine them for display because this is supposed to be a byte-level debugging tool.
+
 ## Requires
 
 Java 1.8
@@ -10,9 +12,9 @@ Java 1.8
 
 Download Marc8ToText.jar and run it thusly:
 
-`java -jar Marc8ToText.jar filename [optional max records to display, default=10]`
+`java -jar Marc8ToText.jar filename [optional max records to display]`
 
-Note: The optional max records to display was added because raw binary Marc21/Marc8 files can be enormous, and you don't want to lock up your machine by trying to display 10 million records. The purpose of this tool is to look at a handful of records to make sure you are processing them correctly.
+Note: The optional max records to display has a default value of 10 because raw binary Marc21/Marc8 files can be enormous, and you don't want to tax your machine by trying to display 10 million records.
 
 ## Sample output
 
