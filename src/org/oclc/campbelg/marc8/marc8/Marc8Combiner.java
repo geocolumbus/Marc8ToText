@@ -211,12 +211,12 @@ public class Marc8Combiner {
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x51) { // (Q
                     characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_CYRILLIC;
-                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(N EXTENDED CYRILLIC]" + ANSI_RESET));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(Q EXTENDED CYRILLIC]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x53) { // (S
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_GREEK;
-                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(N BASIC GREEK]" + ANSI_RESET));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(S BASIC GREEK]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x62) { // b
