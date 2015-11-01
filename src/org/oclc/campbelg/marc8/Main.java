@@ -20,7 +20,7 @@ public class Main {
             String fileName = args[0];
             try {
                 Marc8File marc8File = new Marc8File(fileName, maxRecords);
-                System.out.println(marc8File.marc8RecordsToString());
+                System.out.println(marc8File.convertRecordsToString());
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

@@ -1,6 +1,5 @@
 package org.oclc.campbelg.marc8.marc8;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,8 +19,7 @@ public class Marc8File {
     private String fileName;
     private int maxRecords;
     private ArrayList<ArrayList<Byte>> records = new ArrayList<>();
-    private ArrayList<ArrayList<Marc8Byte>> recordsBytes = new ArrayList<>();
-    private ArrayList<ArrayList<Marc8Representation>> recordsRepresentation = new ArrayList<>();
+    private ArrayList<ArrayList<Marc8Character>> recordsRepresentation = new ArrayList<>();
 
     /**
      * Read the file and process each record.
@@ -33,19 +31,9 @@ public class Marc8File {
         this.fileName = fileName;
         this.maxRecords = maxRecords;
         readMarc8File();
-        loadMarc8Bytes();
-        for (ArrayList<Marc8Byte> marc8Bytes : recordsBytes) {
+        for (ArrayList<Byte> marc8Bytes : records) {
             recordsRepresentation.add(Marc8Combiner.combine(marc8Bytes));
         }
-    }
-
-    /**
-     * Determine if the file exists
-     *
-     * @return
-     */
-    public boolean exists() {
-        return (new File(fileName)).exists();
     }
 
     /**
@@ -70,19 +58,6 @@ public class Marc8File {
     }
 
     /**
-     * Store the Marc8Bytes in a structure
-     */
-    private void loadMarc8Bytes() {
-        for (int i = 0; i < records.size(); i++) {
-            ArrayList<Marc8Byte> marc8Bytes = new ArrayList<>();
-            for (byte b : records.get(i)) {
-                marc8Bytes.add(new Marc8Byte(b));
-            }
-            recordsBytes.add(marc8Bytes);
-        }
-    }
-
-    /**
      * The Marc21 Sections
      */
     private enum Marc21Mode {
@@ -92,30 +67,30 @@ public class Marc8File {
     }
 
     /**
-     * Return the records in a human readable format
+     * Loop through the records, converting each to a string.
      *
      * @return
      */
-    public String marc8RecordsToString() {
+    public String convertRecordsToString() {
         String ret = "";
-        for (ArrayList<Marc8Representation> marc8Representations : recordsRepresentation) {
-            ret += marc8RepresentationsToString(marc8Representations);
+        for (ArrayList<Marc8Character> marc8Characters : recordsRepresentation) {
+            ret += convertMarc8CharsToString(marc8Characters);
         }
         return ret;
     }
 
     /**
-     * Display the marc8Representations in human readable format
+     * Display the marc8Characters in human readable format
      *
-     * @param marc8Representations
+     * @param marc8Characters
      * @return
      */
-    private String marc8RepresentationsToString(ArrayList<Marc8Representation> marc8Representations) {
+    private String convertMarc8CharsToString(ArrayList<Marc8Character> marc8Characters) {
         String ret = "";
 
         Marc21Mode marc21Mode = Marc21Mode.NONE;
 
-        for (int i = 0; i < marc8Representations.size(); i++) {
+        for (int i = 0; i < marc8Characters.size(); i++) {
             switch (i) {
                 case 0:
                     ret += "\n";
@@ -205,28 +180,28 @@ public class Marc8File {
             }
 
             if (marc21Mode == Marc21Mode.DIRECTORY) {
-                if (marc8Representations.get(i).getMarc8Byte() == 0x1E) {
+                if (marc8Characters.get(i).getMarc8Byte() == 0x1E) {
                     marc21Mode = Marc21Mode.NONE;
-                    ret += marc8Representations.get(i).getRepresentation();
+                    ret += marc8Characters.get(i).getMarc8Char();
                     continue;
                 } else {
                     ret += "\n";
                     for (int count = 0; count < 3; count++) {
-                        ret += marc8Representations.get(i + count).getRepresentation();
+                        ret += marc8Characters.get(i + count).getMarc8Char();
                     }
                     ret += " ";
                     for (int count = 4; count < 7; count++) {
-                        ret += marc8Representations.get(i + count).getRepresentation();
+                        ret += marc8Characters.get(i + count).getMarc8Char();
                     }
                     ret += " ";
                     for (int count = 7; count < 12; count++) {
-                        ret += marc8Representations.get(i + count).getRepresentation();
+                        ret += marc8Characters.get(i + count).getMarc8Char();
                     }
                     i += 11;
                     continue;
                 }
             }
-            ret += marc8Representations.get(i).getRepresentation();
+            ret += marc8Characters.get(i).getMarc8Char();
         }
         return ret;
     }
