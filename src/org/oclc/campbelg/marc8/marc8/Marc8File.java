@@ -6,15 +6,9 @@ import java.util.ArrayList;
 
 public class Marc8File {
 
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLACK = "\u001B[30m";
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
-    private static final String ANSI_BLUE = "\u001B[34m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
-    private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String ANSI_WHITE = "\u001B[37m";
+    private String reset;
+    private String blue;
+    private String newLine;
 
     private String fileName;
     private int maxRecords;
@@ -27,12 +21,25 @@ public class Marc8File {
      * @param fileName
      * @throws IOException
      */
-    public Marc8File(String fileName, int maxRecords) throws IOException {
+    public Marc8File(String fileName, int maxRecords, OutputMode outputMode) throws IOException {
         this.fileName = fileName;
         this.maxRecords = maxRecords;
+
+        switch (outputMode) {
+            case ANSI:
+                reset = CharacterColor.RESET.getAnsiColor();
+                blue = CharacterColor.BLUE.getAnsiColor();
+                newLine = "\n";
+                break;
+            case HTML:
+                reset = CharacterColor.RESET.getWebColor();
+                blue = CharacterColor.BLUE.getWebColor();
+                newLine = "<br>";
+                break;
+        }
         readMarc8File();
         for (ArrayList<Byte> marc8Bytes : records) {
-            recordsRepresentation.add(Marc8Combiner.combine(marc8Bytes));
+            recordsRepresentation.add((new Marc8Combiner(outputMode)).combine(marc8Bytes));
         }
     }
 
@@ -93,86 +100,86 @@ public class Marc8File {
         for (int i = 0; i < marc8Characters.size(); i++) {
             switch (i) {
                 case 0:
-                    ret += "\n";
-                    ret += ANSI_BLUE;
+                    ret += newLine;
+                    ret += blue;
                     ret += "RECORD LENGTH: ";
-                    ret += ANSI_RESET;
+                    ret += reset;
                     marc21Mode = Marc21Mode.LEADER;
                     break;
                 case 5:
-                    ret += ANSI_BLUE;
-                    ret += "\nRECORD STATUS: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "RECORD STATUS: ";
+                    ret += reset;
                     break;
                 case 6:
-                    ret += ANSI_BLUE;
-                    ret += "\nTYPE OF RECORD: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "TYPE OF RECORD: ";
+                    ret += reset;
                     break;
                 case 7:
-                    ret += ANSI_BLUE;
-                    ret += "\nBIBLIOGRAPHIC LEVEL: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "BIBLIOGRAPHIC LEVEL: ";
+                    ret += reset;
                     break;
                 case 8:
-                    ret += ANSI_BLUE;
-                    ret += "\nTYPE OF CONTROL: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "TYPE OF CONTROL: ";
+                    ret += reset;
                     break;
                 case 9:
-                    ret += ANSI_BLUE;
-                    ret += "\nCHARACTER CODING SCHEME: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "CHARACTER CODING SCHEME: ";
+                    ret += reset;
                     break;
                 case 10:
-                    ret += ANSI_BLUE;
-                    ret += "\nINDICATOR COUNT: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "INDICATOR COUNT: ";
+                    ret += reset;
                     break;
                 case 11:
-                    ret += ANSI_BLUE;
-                    ret += "\nSUBFIELD CODE COUNT: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "SUBFIELD CODE COUNT: ";
+                    ret += reset;
                     break;
                 case 12:
-                    ret += ANSI_BLUE;
-                    ret += "\nBASE ADDRESS OF DATE: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "BASE ADDRESS OF DATE: ";
+                    ret += reset;
                     break;
                 case 17:
-                    ret += ANSI_BLUE;
-                    ret += "\nENCODING LEVEL: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "ENCODING LEVEL: ";
+                    ret += reset;
                     break;
                 case 18:
-                    ret += ANSI_BLUE;
-                    ret += "\nDESCRIPTIVE CATALOGING FORM: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "DESCRIPTIVE CATALOGING FORM: ";
+                    ret += reset;
                     break;
                 case 19:
-                    ret += ANSI_BLUE;
-                    ret += "\nMULTIPART RESOURCE RECORD LEVEL: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "MULTIPART RESOURCE RECORD LEVEL: ";
+                    ret += reset;
                     break;
                 case 20:
-                    ret += ANSI_BLUE;
-                    ret += "\nLENGTH OF THE LENGTH-OF-FIELD PORTION: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "LENGTH OF THE LENGTH-OF-FIELD PORTION: ";
+                    ret += reset;
                     break;
                 case 21:
-                    ret += ANSI_BLUE;
-                    ret += "\nLENGTH OF THE STARTING-CHARACTER-POSITION PORTION: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "LENGTH OF THE STARTING-CHARACTER-POSITION PORTION: ";
+                    ret += reset;
                     break;
                 case 22:
-                    ret += ANSI_BLUE;
-                    ret += "\nLENGTH OF THE IMPLEMENTATION-DEFINED PORTION: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "LENGTH OF THE IMPLEMENTATION-DEFINED PORTION: ";
+                    ret += reset;
                     break;
                 case 23:
-                    ret += ANSI_BLUE;
-                    ret += "\nUNDEFINED: ";
-                    ret += ANSI_RESET;
+                    ret += blue;
+                    ret += newLine + "UNDEFINED: ";
+                    ret += reset;
                     break;
                 case 24:
                     marc21Mode = Marc21Mode.DIRECTORY;
@@ -185,7 +192,7 @@ public class Marc8File {
                     ret += marc8Characters.get(i).getMarc8Char();
                     continue;
                 } else {
-                    ret += "\n";
+                    ret += newLine;
                     for (int count = 0; count < 3; count++) {
                         ret += marc8Characters.get(i + count).getMarc8Char();
                     }

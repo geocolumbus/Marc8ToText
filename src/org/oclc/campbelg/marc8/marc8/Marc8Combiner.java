@@ -8,15 +8,32 @@ import java.util.ArrayList;
  */
 public class Marc8Combiner {
 
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLACK = "\u001B[30m";
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
-    private static final String ANSI_BLUE = "\u001B[34m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
-    private static final String ANSI_CYAN = "\u001B[36m";
-    private static final String ANSI_WHITE = "\u001B[37m";
+    private String green;
+    private String yellow;
+    private String reset;
+    private String newLine;
+
+    /**
+     * Initialize the combiner for the type of output required.
+     * @param outputMode
+     */
+    public Marc8Combiner(OutputMode outputMode) {
+        
+        switch (outputMode) {
+            case ANSI:
+                newLine="\n";
+                green=CharacterColor.GREEN.getAnsiColor();
+                yellow=CharacterColor.YELLOW.getAnsiColor();
+                reset=CharacterColor.RESET.getAnsiColor();
+                break;
+            case HTML:
+                newLine="<br>";
+                green=CharacterColor.GREEN.getWebColor();
+                yellow=CharacterColor.YELLOW.getWebColor();
+                reset=CharacterColor.RESET.getWebColor();
+                break;
+        }
+    }
 
     /**
      * Enumerations for the graphic character mode
@@ -48,7 +65,7 @@ public class Marc8Combiner {
         GREEK_SYMBOL
     }
 
-    public static ArrayList<Marc8Character> combine(ArrayList<Byte> marc8Bytes) {
+    public ArrayList<Marc8Character> combine(ArrayList<Byte> marc8Bytes) {
         ArrayList<Marc8Character> marc8Characters = load(marc8Bytes);
         return marc8Characters;
     }
@@ -59,7 +76,7 @@ public class Marc8Combiner {
      * @param marc8Bytes
      * @return
      */
-    private static ArrayList<Marc8Character> load(ArrayList<Byte> marc8Bytes) {
+    private ArrayList<Marc8Character> load(ArrayList<Byte> marc8Bytes) {
         ArrayList<Marc8Character> marc8Characters = new ArrayList<>();
 
         GraphicCharEscapeMode graphicCharGraphicCharEscapeMode = GraphicCharEscapeMode.NONE;
@@ -73,13 +90,13 @@ public class Marc8Combiner {
 
             // Handle Marc21 Escape characters
             if (b1 == 0x1D) {
-                marc8Characters.add(new Marc8Character("\n" + ANSI_GREEN + "[1D Rec Term]" + ANSI_RESET + "\n", b1));
+                marc8Characters.add(new Marc8Character(newLine + green + "[1D Rec Term]" + reset + newLine, b1));
                 continue;
             } else if (b1 == 0x1E) {
-                marc8Characters.add(new Marc8Character(ANSI_GREEN + "[1E Fld Term]" + ANSI_RESET + "\n", b1));
+                marc8Characters.add(new Marc8Character(green + "[1E Fld Term]" + reset + newLine, b1));
                 continue;
             } else if (b1 == 0x1F) {
-                marc8Characters.add(new Marc8Character("\n" + ANSI_GREEN + "[1F Subfld]" + (char) b2 + ANSI_RESET, b1));
+                marc8Characters.add(new Marc8Character(newLine + green + "[1F Subfld]" + (char) b2 + reset, b1));
                 i++;
                 continue;
             } else if (b1 == 0x88) {
@@ -176,67 +193,67 @@ public class Marc8Combiner {
             if (b1 == 0x1b) { // esc
                 if (b2 == 0x28 && b3 == 0x31) { // (1
                     characterSetEscapeMode = CharacterSetEscapeMode.CJK;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(1 CJK]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(1 CJK]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x32) { // (2
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_HEBREW;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(2 BASIC HEBREW]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(2 BASIC HEBREW]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x33) { // (3
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_ARABIC;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(3 BASIC ARABIC]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(3 BASIC ARABIC]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x34) { // (4
                     characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_ARABIC;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(4 EXTENDED ARABIC]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(4 EXTENDED ARABIC]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x42) { // (B
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_LATIN;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(B BASIC LATIN]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(B BASIC LATIN]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x21 && b4 == 0x45) { // (!E
                     characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_LATIN;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(!E EXTENDED LATIN]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(!E EXTENDED LATIN]" + reset));
                     i += 3;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x4E) { // (N
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_CYRILLIC;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(N BASIC CYRILLIC]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(N BASIC CYRILLIC]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x51) { // (Q
                     characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_CYRILLIC;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(N EXTENDED CYRILLIC]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(N EXTENDED CYRILLIC]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x53) { // (S
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_GREEK;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[esc(N BASIC GREEK]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[esc(N BASIC GREEK]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x62) { // b
                     characterSetEscapeMode = CharacterSetEscapeMode.SUBSCRIPT;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[escb SUBSCRIPT]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[escb SUBSCRIPT]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x67) { // g
                     characterSetEscapeMode = CharacterSetEscapeMode.GREEK_SYMBOL;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[escg GREEK SYMBOL]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[escg GREEK SYMBOL]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x70) { // p
                     characterSetEscapeMode = CharacterSetEscapeMode.SUPERSCRIPT;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[escp SUPERSCRIPT]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[escp SUPERSCRIPT]" + reset));
                     i += 2;
                     continue;
                 } else if (b2 == 0x73) { // s
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_LATIN;
-                    marc8Characters.add(new Marc8Character(ANSI_YELLOW + "[ESCs BASIC LATIN]" + ANSI_RESET));
+                    marc8Characters.add(new Marc8Character(yellow + "[ESCs BASIC LATIN]" + reset));
                     i += 2;
                     continue;
                 }
