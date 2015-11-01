@@ -42,7 +42,10 @@ public class Marc8Combiner {
         EXTENDED_LATIN,
         BASIC_CYRILLIC,
         EXTENDED_CYRILLIC,
-        BASIC_GREEK
+        BASIC_GREEK,
+        SUBSCRIPT,
+        SUPERSCRIPT,
+        GREEK_SYMBOL
     }
 
     public static ArrayList<Marc8Representation> combine(ArrayList<Marc8Byte> marc8Bytes) {
@@ -70,13 +73,13 @@ public class Marc8Combiner {
 
             // Handle Marc21 Escape characters
             if (b1 == 0x1D) {
-                marc8Representations.add(new Marc8Representation("\n" + ANSI_RED + "[1D Rec Term]" + ANSI_RESET + "\n", b1));
+                marc8Representations.add(new Marc8Representation("\n" + ANSI_GREEN + "[1D Rec Term]" + ANSI_RESET + "\n", b1));
                 continue;
             } else if (b1 == 0x1E) {
                 marc8Representations.add(new Marc8Representation(ANSI_GREEN + "[1E Fld Term]" + ANSI_RESET + "\n", b1));
                 continue;
             } else if (b1 == 0x1F) {
-                marc8Representations.add(new Marc8Representation("\n" + ANSI_YELLOW + "[1F Subfld]" + (char) b2+ ANSI_RESET, b1));
+                marc8Representations.add(new Marc8Representation("\n" + ANSI_GREEN + "[1F Subfld]" + (char) b2 + ANSI_RESET, b1));
                 i++;
                 continue;
             } else if (b1 == 0x88) {
@@ -134,7 +137,7 @@ public class Marc8Combiner {
                 }
             }
 
-            // Check for raphic character escape clear
+            // Check for graphic character escape clear
             if (b1 == 0x1b) {
                 if (b2 == 0x2F && b3 == 0x46) {
                     graphicCharGraphicCharEscapeMode = GraphicCharEscapeMode.NONE;
@@ -173,56 +176,67 @@ public class Marc8Combiner {
             if (b1 == 0x1b) { // esc
                 if (b2 == 0x28 && b3 == 0x31) { // (1
                     characterSetEscapeMode = CharacterSetEscapeMode.CJK;
-                    //marc8Representations.add(new Marc8Representation(" [ESC](1[Chinese, Japanese & Korean] "));
-                    marc8Representations.add(new Marc8Representation(" [esc(1] "));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(1 CJK]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x32) { // (2
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_HEBREW;
-                    //marc8Representations.add(new Marc8Representation(" [ESC](2[Basic Hebrew] "));
-                    marc8Representations.add(new Marc8Representation("[esc(2] "));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(2 BASIC HEBREW]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x33) { // (3
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_ARABIC;
-                    //marc8Representations.add(new Marc8Representation(" [ESC](3[Basic Arabic] "));
-                    marc8Representations.add(new Marc8Representation("[esc(3] "));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(3 BASIC ARABIC]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x34) { // (4
                     characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_ARABIC;
-                    //marc8Representations.add(new Marc8Representation(" [esc(4][Extended Arabic] "));
-                    marc8Representations.add(new Marc8Representation("[esc(4] "));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(4 EXTENDED ARABIC]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x42) { // (B
                     characterSetEscapeMode = CharacterSetEscapeMode.BASIC_LATIN;
-                    //marc8Representations.add(new Marc8Representation(" [ESC](B[Basic Latin] "));
-                    marc8Representations.add(new Marc8Representation("[esc(B] "));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(B BASIC LATIN]" + ANSI_RESET));
                     i += 2;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x21 && b4 == 0x45) { // (!E
                     characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_LATIN;
-                    //marc8Representations.add(new Marc8Representation(" [esc(!E][Extended Latin] "));
-                    marc8Representations.add(new Marc8Representation("[esc(!E] "));
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(!E EXTENDED LATIN]" + ANSI_RESET));
                     i += 3;
                     continue;
                 } else if (b2 == 0x28 && b3 == 0x4E) { // (N
-                    characterSetEscapeMode = CharacterSetEscapeMode.CJK;
-                    //marc8Representations.add(new Marc8Representation(" [esc(N][Basic Cyrillic] "));
-                    marc8Representations.add(new Marc8Representation("[esc(N] "));
+                    characterSetEscapeMode = CharacterSetEscapeMode.BASIC_CYRILLIC;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(N BASIC CYRILLIC]" + ANSI_RESET));
                     i += 2;
                     continue;
-                } else if (b2 == 0x28 && b3 == 0x31) { // (Q
-                    characterSetEscapeMode = CharacterSetEscapeMode.CJK;
-                    //marc8Representations.add(new Marc8Representation(" [esc(Q][Extended Cyrillic] "));
-                    marc8Representations.add(new Marc8Representation("[esc(Q] "));
+                } else if (b2 == 0x28 && b3 == 0x51) { // (Q
+                    characterSetEscapeMode = CharacterSetEscapeMode.EXTENDED_CYRILLIC;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(N EXTENDED CYRILLIC]" + ANSI_RESET));
                     i += 2;
                     continue;
-                } else if (b2 == 0x28 && b3 == 0x31) { // (S
-                    characterSetEscapeMode = CharacterSetEscapeMode.CJK;
-                    //marc8Representations.add(new Marc8Representation(" [esc(S][Basic Greek] "));
-                    marc8Representations.add(new Marc8Representation("[esc(S] "));
+                } else if (b2 == 0x28 && b3 == 0x53) { // (S
+                    characterSetEscapeMode = CharacterSetEscapeMode.BASIC_GREEK;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[esc(N BASIC GREEK]" + ANSI_RESET));
+                    i += 2;
+                    continue;
+                } else if (b2 == 0x62) { // b
+                    characterSetEscapeMode = CharacterSetEscapeMode.SUBSCRIPT;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[escb SUBSCRIPT]" + ANSI_RESET));
+                    i += 2;
+                    continue;
+                } else if (b2 == 0x67) { // g
+                    characterSetEscapeMode = CharacterSetEscapeMode.GREEK_SYMBOL;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[escg GREEK SYMBOL]" + ANSI_RESET));
+                    i += 2;
+                    continue;
+                } else if (b2 == 0x70) { // p
+                    characterSetEscapeMode = CharacterSetEscapeMode.SUPERSCRIPT;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[escp SUPERSCRIPT]" + ANSI_RESET));
+                    i += 2;
+                    continue;
+                } else if (b2 == 0x73) { // s
+                    characterSetEscapeMode = CharacterSetEscapeMode.BASIC_LATIN;
+                    marc8Representations.add(new Marc8Representation(ANSI_YELLOW + "[ESCs BASIC LATIN]" + ANSI_RESET));
                     i += 2;
                     continue;
                 }
@@ -230,5 +244,6 @@ public class Marc8Combiner {
         }
         return marc8Representations;
     }
+
 
 }
