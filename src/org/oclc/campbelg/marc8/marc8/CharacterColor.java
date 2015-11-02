@@ -29,4 +29,11 @@ public enum CharacterColor {
     public String getAnsiColor() {
         return ansiColor;
     }
+
+    public String getColor(OutputMode outputMode) {
+        if (outputMode == OutputMode.ANSI) {
+            return ansiColor;
+        }
+        return webColor;
+    }
 }
