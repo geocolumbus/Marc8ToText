@@ -1,4 +1,4 @@
-package org.oclc.campbelg.marc8.marc8;
+package org.oclc.campbelg.marc8.reader;
 
 /**
  * Graphic character escape mode, per ISO/IEC 2022.

@@ -1,4 +1,4 @@
-package org.oclc.campbelg.marc8.marc8;
+package org.oclc.campbelg.marc8.reader;
 
 /**
  * Ansi and Web colors for characters.

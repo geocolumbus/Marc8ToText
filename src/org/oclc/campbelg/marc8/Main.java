@@ -1,8 +1,8 @@
 package org.oclc.campbelg.marc8;
 
-import org.oclc.campbelg.marc8.marc8.Marc8File;
-import org.oclc.campbelg.marc8.marc8.OutputMode;
-import org.oclc.campbelg.marc8.utilities.MyHelp;
+import org.oclc.campbelg.marc8.reader.Marc8File;
+import org.oclc.campbelg.marc8.reader.OutputMode;
+import org.oclc.campbelg.marc8.help.MyHelp;
 
 import java.io.IOException;
 

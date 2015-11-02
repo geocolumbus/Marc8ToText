@@ -1,7 +1,7 @@
-package org.oclc.campbelg.marc8.utilities;
+package org.oclc.campbelg.marc8.help;
 
 /**
- * Display a little help message when the user cacs on the command line.
+ * Display a help message when the user fails to include proper arguments.
  */
 public class MyHelp {
 

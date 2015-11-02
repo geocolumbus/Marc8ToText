@@ -1,4 +1,4 @@
-package org.oclc.campbelg.marc8.marc8;
+package org.oclc.campbelg.marc8.reader;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class Marc8Combiner {
     }
 
     /**
-     * Load the marc8 bytes and combine any escapes. As it reads through the bytes, it keeps track of
+     * Load the reader bytes and combine any escapes. As it reads through the bytes, it keeps track of
      * which character modes it is in and adjusts character display as required.
      *
      * @param marc8Bytes
@@ -76,7 +76,7 @@ public class Marc8Combiner {
             }
 
             // If we made it this far, we are dealing with a character and not an escape.
-            // For now, I just display the marc8 bytes as two digit hex with a space between each.
+            // For now, I just display the reader bytes as two digit hex with a space between each.
             // TODO Offer a UTF-8 conversion option so characters are readible on the screen.
             if (b1 != 0x1b) {
                 switch (graphicCharGraphicCharEscapeMode) {
