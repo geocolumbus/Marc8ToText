@@ -20,14 +20,15 @@ public enum Marc8ByteToCharacter {
     JOINER(new Byte[]{(byte) 0x89}, "[8D Joiner]", CharacterColor.GREEN, null, null, true),
     NON_JOINER(new Byte[]{(byte) 0x89}, "[8E Non-joiner]", CharacterColor.GREEN, null, null, true),
 
-    G0_SET_NORMAL(new Byte[]{0x1b, 0x28, 0x24}, "[ESC]($  g0 set normal", CharacterColor.RED, null, GraphicCharEscapeMode.G0_SET_NORMAL, true),
+    G0_SET_NORMAL(new Byte[]{0x1b, 0x28, 0x24}, "[ESC]($ g0 set normal", CharacterColor.RED, null, GraphicCharEscapeMode.G0_SET_NORMAL, true),
     G0_SET_ADDITIONAL(new Byte[]{0x1b, 0x2c, 0x24, 0x2c}, "[ESC],$, g0 set additional", CharacterColor.RED, null, GraphicCharEscapeMode.G0_SET_ADDITIONAL, true),
     G1_SET_NORMAL(new Byte[]{0x1b, 0x29, 0x24, 0x29}, "[ESC])$) g1 set normal", CharacterColor.RED, null, GraphicCharEscapeMode.G1_SET_NORMAL, true),
     G1_SET_ADDITIONAL(new Byte[]{0x1b, 0x2d, 0x24, 0x2d}, "[ESC]-$- g1 set additional", CharacterColor.RED, null, GraphicCharEscapeMode.G1_SET_ADDITIONAL, true),
     GRAPHIC_ESCAPE_CLEAR(new Byte[]{0x1b, 0x2f, 0x46, 0}, "[ESC]/F", CharacterColor.RED, null, GraphicCharEscapeMode.NONE, true),
 
     BASIC_CYRILLIC(new Byte[]{0x1b, 0x28, 0x4e}, "[ESC(N BASIC CYRILLIC]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_CYRILLIC, null, false),
-    CJK(new Byte[]{0x1b, 0x28, 0x31}, "[ESC(1 CJK]", CharacterColor.YELLOW, CharacterSetEscape.CJK, null, false),
+    CJK_LOC(new Byte[]{0x1b, 0x28, 0x31}, "[ESC(1 CJK]", CharacterColor.YELLOW, CharacterSetEscape.CJK, null, false),
+    CJK(new Byte[]{0x1b, 0x24, 0x31}, "[ESC$1 CJK]", CharacterColor.YELLOW, CharacterSetEscape.CJK, null, false),
     BASIC_HEBREW(new Byte[]{0x1b, 0x28, 0x32}, "[ESC(2 BASIC HEBREW]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_HEBREW, null, false),
     BASIC_ARABIC(new Byte[]{0x1b, 0x28, 0x33}, "[ESC(3 BASIC ARABIC]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_ARABIC, null, false),
     EXTENDED_ARABIC(new Byte[]{0x1b, 0x28, 0x34}, "[ESC(4 EXTENDED ARABIC]\"", CharacterColor.YELLOW, CharacterSetEscape.EXTENDED_ARABIC, null, false),
