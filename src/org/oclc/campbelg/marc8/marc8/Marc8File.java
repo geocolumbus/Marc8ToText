@@ -39,7 +39,7 @@ public class Marc8File {
         }
         readMarc8File();
         for (ArrayList<Byte> marc8Bytes : records) {
-            recordsRepresentation.add((new Marc8Combiner(outputMode)).combine(marc8Bytes));
+            recordsRepresentation.add((new Marc8Combiner(outputMode)).combineMarc8Characters(marc8Bytes));
         }
     }
 

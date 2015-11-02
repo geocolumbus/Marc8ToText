@@ -30,6 +30,11 @@ public enum CharacterColor {
         return ansiColor;
     }
 
+    /**
+     * Outputs the color setting string based on the type of output desired.
+     * @param outputMode enum, either ANSI or HTML
+     * @return string, the color
+     */
     public String getColor(OutputMode outputMode) {
         if (outputMode == OutputMode.ANSI) {
             return ansiColor;

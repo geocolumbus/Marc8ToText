@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 /**
  * Convert bytes to Marc8 escape sequences
+ * 1. bytes
+ * 2. text representation of the escape displayed to the console.
+ * 3. the color (if any) to display the escape text in.
+ * 4. the escape mode (ie, switch to Cyrillic).
+ * 5. the G0, G1 (normal, additional) ISO/IEC 2022 character mode.
+ * 6. whether the escape symbol should be wrapped in newlines or not.
  */
 public enum Marc8ByteToCharacter {
     RECORD_TERMINATOR(new Byte[]{0x1d}, "[1D Rec Term]", CharacterColor.GREEN, null, null, true),
@@ -82,9 +88,13 @@ public enum Marc8ByteToCharacter {
         return carriageReturn;
     }
 
+    // Try to match bytes to the above enumerations.
+    // This routing can match a byte sequence of 1 to 4 bytes.
     public static Marc8ByteToCharacter getByteMatch(Byte[] fourBytes) {
-
+        // Loop through the enumerations.
         for (Marc8ByteToCharacter marc8ByteToCharacter : Marc8ByteToCharacter.values()) {
+            // Get the number of bytes from the enumeration, pare down the 4 submitted bytes to the same
+            // number and compare them.
             Byte[] compareBytes = Arrays.copyOf(fourBytes, marc8ByteToCharacter.getMarc8Bytes().length);
             if (Arrays.equals(marc8ByteToCharacter.getMarc8Bytes(), compareBytes)) {
                 return marc8ByteToCharacter;
