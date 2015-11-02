@@ -55,6 +55,7 @@ public class Marc8Combiner {
                 String newLine = match.isCarriageReturn() ? outputMode == OutputMode.ANSI ? "\n" : "<br>" : "";
                 String color = match.getCharacterColor().getColor(outputMode);
                 String resetColor = CharacterColor.RESET.getColor(outputMode);
+                int byteLength = match.getMarc8Bytes().length;
 
                 marc8Characters.add(new Marc8Character(newLine
                         + color
@@ -68,6 +69,9 @@ public class Marc8Combiner {
                         characterSetEscapeMode : match.getCharacterSetEscape();
                 graphicCharGraphicCharEscapeMode = match.getGraphicCharEscapeMode() == null ?
                         graphicCharGraphicCharEscapeMode : match.getGraphicCharEscapeMode();
+
+                // If the escape sequence is n bytes long, you need to skip n-1 bytes ahead..
+                i+=byteLength-1;
                 continue;
             }
 

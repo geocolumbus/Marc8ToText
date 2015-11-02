@@ -31,7 +31,7 @@ public enum Marc8ByteToCharacter {
     BASIC_HEBREW(new Byte[]{0x1b, 0x28, 0x32}, "[ESC(2 BASIC HEBREW]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_HEBREW, null, false),
     BASIC_ARABIC(new Byte[]{0x1b, 0x28, 0x33}, "[ESC(3 BASIC ARABIC]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_ARABIC, null, false),
     EXTENDED_ARABIC(new Byte[]{0x1b, 0x28, 0x34}, "[ESC(4 EXTENDED ARABIC]\"", CharacterColor.YELLOW, CharacterSetEscape.EXTENDED_ARABIC, null, false),
-    BASIC_LATIN_3BYTE(new Byte[]{0x1b, 0x28, 0x42}, "[ESCs BASIC LATIN]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_LATIN, null, false),
+    BASIC_LATIN_3BYTE(new Byte[]{0x1b, 0x28, 0x42}, "[ESC(B BASIC LATIN]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_LATIN, null, false),
     EXTENDED_LATIN(new Byte[]{0x1b, 0x21, 0x45}, "[ESC(!E EXTENDED LATIN]", CharacterColor.YELLOW, CharacterSetEscape.EXTENDED_LATIN, null, false),
     EXTENDED_CYRILLIC(new Byte[]{0x1b, 0x28, 0x51}, "[ESC(N EXTENDED CYRILLIC]", CharacterColor.YELLOW, CharacterSetEscape.EXTENDED_CYRILLIC, null, false),
     BASIC_GREEK(new Byte[]{0x1b, 0x28, 0x53}, "[ESC(N BASIC GREEK]", CharacterColor.YELLOW, CharacterSetEscape.BASIC_GREEK, null, false),
