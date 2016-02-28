@@ -4,7 +4,7 @@ A command line utility to display a Marc21 format / Marc8 encoded record to the 
 
 ## Requires
 
-Java 1.8
+Java 1.7 or greater.
 
 ## Installation and Use
 
