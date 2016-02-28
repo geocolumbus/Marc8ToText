@@ -14,7 +14,7 @@ Download Marc8ToText.jar and run it thusly:
 git clone https://github.com/geocolumbus/Marc8ToText.git
 cd Marc8ToText
 mvn clean package
-java -jar target/marc8-1.0-SNAPSHOT-jar-with-dependencies.jar sampleMArc8File/IRMARC8.bin
+java -jar target/marc8-1.0-SNAPSHOT-jar-with-dependencies.jar sampleMArc8File/IRMARC8.bin 100
 </pre>
 
 Note: The optional max records to display has a default value of 10 because raw binary Marc21/Marc8 files can be enormous, and you don't want to tax your machine by trying to display 10 million records.
