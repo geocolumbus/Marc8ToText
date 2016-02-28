@@ -11,7 +11,7 @@ Java 1.8
 Download Marc8ToText.jar and run it thusly:
 
 <pre>
-git clone
+git clone https://github.com/geocolumbus/Marc8ToText.git
 mvn clean package
 java -jar target/marc8-1.0-SNAPSHOT-jar-with-dependencies.jar
 </pre>
