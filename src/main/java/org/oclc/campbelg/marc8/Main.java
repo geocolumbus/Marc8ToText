@@ -1,13 +1,15 @@
 package org.oclc.campbelg.marc8;
 
+import org.oclc.campbelg.marc8.help.MyHelp;
 import org.oclc.campbelg.marc8.reader.Marc8File;
 import org.oclc.campbelg.marc8.reader.OutputMode;
-import org.oclc.campbelg.marc8.help.MyHelp;
 
 import java.io.IOException;
 
+/**
+ * Process Marc8 bytes for command line display
+ */
 public class Main {
-
     private static final int MAX_RECORDS = 10;
 
     /**

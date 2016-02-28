@@ -19,7 +19,7 @@ public class Marc8File {
      * Read the file and process each record.
      *
      * @param fileName
-     * @throws IOException
+     * @throws java.io.IOException
      */
     public Marc8File(String fileName, int maxRecords, OutputMode outputMode) throws IOException {
         this.fileName = fileName;
