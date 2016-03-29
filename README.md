@@ -14,7 +14,6 @@ Download Marc8ToText.jar and run it thusly:
 git clone https://github.com/geocolumbus/Marc8ToText.git
 cd Marc8ToText
 mvn clean package
-#         the jar file                                        the marc8 file              show 1 record
 java -jar target/marc8-1.0-SNAPSHOT-jar-with-dependencies.jar sampleMArc8File/IRMARC8.bin 1
 </pre>
 
